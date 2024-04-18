@@ -132,7 +132,7 @@ Similarly, we may compute the loop-transfer function and plot its Nyquist curve
 
 ```@example dc_motor_pi
 matrices_L, simplified_sys = Blocks.get_looptransfer(
-    model, :y, op = Dict(unknowns(sys) .=> 0.0))
+    model, :y; op = Dict(unknowns(sys) .=> 0.0), p = Dict(feedback.input2.u => 0.0))
 L = -ss(matrices_L...) # The loop-transfer function as a StateSpace system. The negative sign is to negate the built-in negative feedback
 Ms, ωMs = hinfnorm(So) # Compute the peak of the sensitivity function to draw a circle in the Nyquist plot
 nyquistplot(L, label = "\$L(s)\$", ylims = (-2.5, 0.5), xlims = (-1.2, 0.1),
